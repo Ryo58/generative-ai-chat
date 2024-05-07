@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成AI検証用チャット</title>
+<style>
+    #chat-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    #chat-messages {
+        margin-bottom: 10px;
+    }
+    #message-input {
+        width: calc(100% - 80px);
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+<div id="chat-container">
+    <h4>生成AI検証用チャット</h4>
+    <div id="chat-messages"></div>
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <button id="send-button">Send</button>
+</div>
+
+<script>
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const chatMessages = document.getElementById('chat-messages');
+    sendButton.addEventListener('click', () => {
+        const messageText = messageInput.value.trim();
+        if (messageText !== '') {
+            displayMessage(messageText);
+            messageInput.value = '';
+        }
+    });
+    function displayMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        chatMessages.appendChild(messageElement);
+    }
+    async function tools() {
+        const _ = await navigator.wakeLock.request('screen');
+        window.addEventListener('unload', async () => {await _.release(); });
+        window.addEventListener('beforeunload', async () => {await _.release();});
+    }
+    tools();
+</script>
+</body>
+</html>
